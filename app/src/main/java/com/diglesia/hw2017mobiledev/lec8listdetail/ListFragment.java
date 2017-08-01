@@ -24,8 +24,13 @@ public class ListFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = DetailFragmentActivity.newIntent(getContext(), strings[i]);
-                startActivity(intent);
+                if (getView().findViewById(R.id.detail_fragment_container) != null) {
+                    DetailFragment fragment = DetailFragment.newInstance(strings[i]);
+                    getFragmentManager().beginTransaction().replace(R.id.detail_fragment_container, fragment).commit();
+                } else {
+                    Intent intent = DetailFragmentActivity.newIntent(getContext(), strings[i]);
+                    startActivity(intent);
+                }
             }
         });
 
